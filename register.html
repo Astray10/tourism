@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to Our Tourism Management System</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="index.html">Home</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="auth-container">
+            <h2>Register</h2>
+            <form id="registrationForm" class="auth-form">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <input type="email" id="email" placeholder="Email" required>
+                <button type="submit">Register</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Tourism Management System</p>
+    </footer>
+
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Get user data from input fields
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const email = document.getElementById('email').value;
+
+            // Create user object
+            const userData = {
+                username: username,
+                password: password,
+                email: email
+            };
+
+            // Save user data to local storage
+            localStorage.setItem('userData', JSON.stringify(userData));
+
+            alert('Registration successful! You can now log in.'); // Notify the user
+            // Optionally, redirect to login page
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+</html>

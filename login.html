@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Login to Our Tourism Management System</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="register.html">Register</a></li>
+            <li><a href="index.html">Home</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="auth-container">
+            <h2>Login</h2>
+            <form id="loginForm" class="auth-form">
+                <input type="text" id="loginUsername" placeholder="Username" required>
+                <input type="password" id="loginPassword" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Tourism Management System</p>
+    </footer>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Get user data from input fields
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+
+            // Retrieve user data from local storage
+            const storedUserData = JSON.parse(localStorage.getItem('userData'));
+
+            // Check if user exists and credentials match
+            if (storedUserData && storedUserData.username === username && storedUserData.password === password) {
+                alert('Login successful!'); // Notify the user
+                // Optionally, redirect to the main page
+                window.location.href = 'index.html';
+            } else {
+                alert('Invalid username or password. Please try again.'); // Notify user of failure
+            }
+        });
+    </script>
+</body>
+</html>

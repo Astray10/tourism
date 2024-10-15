@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tourism Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="container">
+        <h1>Explore the World with Us!</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="destinations.html">Destinations</a></li>
+                <li><a href="booking.html">Book a Trip</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+        <div class="auth-buttons">
+            <a href="login.html" class="auth-button">Login</a>
+            <a href="register.html" class="auth-button">Register</a>
+        </div>
+    </header>
+
+    <section class="container">
+        <h2>Destinations</h2>
+        <div class="destinations-container">
+            <!-- New container for destinations -->
+            <div class="destinations" id="destinationList">
+                <!-- Existing destinations can be dynamically loaded here -->
+            </div>
+        </div>
+
+        <h2>Add New Destination</h2>
+        <div class="add-destination-container">
+            <form id="destinationForm">
+                <input type="text" id="name" placeholder="Destination Name" required>
+                <textarea id="description" placeholder="Description" required></textarea>
+                <input type="text" id="image" placeholder="Image URL" required>
+                <select id="packageType" required>
+                    <option value="" disabled selected>Select Package Type</option>
+                    <option value="Standard">Standard</option>
+                    <option value="Deluxe">Deluxe</option>
+                    <option value="Premium">Premium</option>
+                </select>
+                <input type="number" id="amount" placeholder="Amount (in $)" required>
+                <input type="text" id="duration" placeholder="Duration (e.g., 3 days)" required>
+                <textarea id="highlights" placeholder="Key Highlights (optional)"></textarea>
+                <input type="text" id="contact" placeholder="Contact Info (optional)">
+                <button type="submit">Add Destination</button>
+            </form>
+
+            <div id="imagePreview" class="image-preview" style="display: none;">
+                <h3>Image Preview:</h3>
+                <img id="previewImage" src="" alt="Destination Image" style="max-width: 100%; height: auto;">
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+    <script>
+        // Preview image functionality
+        const imageInput = document.getElementById('image');
+        const imagePreview = document.getElementById('imagePreview');
+        const previewImage = document.getElementById('previewImage');
+
+        imageInput.addEventListener('input', function () {
+            const url = this.value;
+            if (url) {
+                previewImage.src = url;
+                imagePreview.style.display = 'block';
+            } else {
+                imagePreview.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

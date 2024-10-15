@@ -1,0 +1,89 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    display: flex; /* Enable flexbox */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100vh; /* Full height for centering */
+}
+
+/* Header Styles */
+header {
+    text-align: center;
+    padding: 20px;
+    color: white;
+    backdrop-filter: blur(10px);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Container Styles */
+.container {
+    display: flex; /* Enable flexbox for layout */
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center align items */
+    padding: 20px;
+}
+
+/* Auth Container Styles */
+.auth-container {
+    display: flex;
+    flex-direction: column; /* Stack forms vertically */
+    padding: 20px; /* Padding around the container */
+    background: rgba(255, 255, 255, 0.8); /* Slightly transparent white background */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+    max-width: 400px; /* Max width of the container */
+    width: 100%; /* Full width for smaller screens */
+    margin: 0; /* Remove margin for full centering */
+}
+
+/* Input and Button Styles */
+input[type="text"],
+input[type="password"],
+button {
+    width: 100%;
+    padding: 15px; /* Increased padding for better touch targets */
+    margin: 10px 0; /* Margin between inputs */
+    border: none;
+    border-radius: 8px; /* Rounded corners */
+    font-size: 18px; /* Larger font size */
+}
+
+/* Input Styles */
+input[type="text"],
+input[type="password"] {
+    background: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+    color: #333;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+        background: rgba(255, 255, 255, 1); /* Full white on focus */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
+
+/* Button Styles */
+button {
+    background: #ffcc00; /* Button color */
+    color: #333; /* Text color */
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+}
+
+    button:hover {
+        background: #e6b800; /* Darker on hover */
+        transform: scale(1.05); /* Slight scaling effect */
+    }
+
+/* Footer Styles */
+footer {
+    text-align: center;
+    padding: 10px;
+    color: white;
+}

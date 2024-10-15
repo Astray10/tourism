@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Destinations - Tourism Management</title>
+    <link rel="stylesheet" href="style.css"> <!-- Link to your external CSS file -->
+</head>
+<body>
+    <header class="container">
+        <h1>Available Destinations</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="destinations.html">Destinations</a></li>
+                <li><a href="booking.html">Book a Trip</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+        <div class="auth-buttons">
+            <a href="login.html" class="auth-button">Login</a>
+            <a href="register.html" class="auth-button">Register</a>
+        </div>
+    </header>
+
+    <section class="container">
+        <h2>Destinations Gallery</h2>
+        <div class="destinations-container" id="destinationList">
+            <!-- Dynamically loaded destinations will appear here -->
+        </div>
+    </section>
+
+    <script>
+        // Load destinations from localStorage when the page loads
+        function loadDestinations() {
+            const destinationList = document.getElementById('destinationList');
+            const destinations = JSON.parse(localStorage.getItem('destinations')) || [];
+
+            destinationList.innerHTML = ''; // Clear the list
+
+            destinations.forEach(dest => {
+                const destinationDiv = document.createElement('div');
+                destinationDiv.className = 'destination';
+
+                destinationDiv.innerHTML = `
+                    <h3>${dest.name}</h3>
+                    <img src="${dest.image}" alt="${dest.name}">
+                    <p>${dest.description}</p>
+                    <p><strong>Package:</strong> ${dest.package}</p>
+                    <p><strong>Amount:</strong> $${dest.amount}</p>
+                    <p><strong>Duration:</strong> ${dest.duration}</p>
+                    <p><strong>Highlights:</strong> ${dest.highlights || 'N/A'}</p>
+                `;
+
+                destinationList.appendChild(destinationDiv);
+            });
+        }
+
+        // Function to delete a destination (this won't be used in this file, but kept for reference)
+        function deleteDestination(name) {
+            const destinations = JSON.parse(localStorage.getItem('destinations')) || [];
+            const updatedDestinations = destinations.filter(dest => dest.name !== name);
+            localStorage.setItem('destinations', JSON.stringify(updatedDestinations));
+            loadDestinations(); // Refresh the destination list
+        }
+
+        // Load destinations on page load
+        window.onload = loadDestinations;
+    </script>
+
+</body>
+</html>

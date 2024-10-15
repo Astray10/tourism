@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Tourism Management</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Add styles for the container */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background: transparent;
+            backdrop-filter: blur(20px);
+        }
+
+        /* Styles for the form and labels */
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            input[type="submit"]:hover {
+                background-color: #218838;
+            }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Contact Us</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="destinations.html">Destinations</a></li>
+                <li><a href="booking.html">Book a Trip</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="container">
+        <h2>Get in Touch</h2>
+        <form id="contact-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" required></textarea>
+
+            <input type="submit" value="Send Message">
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Tourism Management. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Handle contact form submission
+        document.getElementById('contact-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            // Save query to local storage
+            const query = { name, email, message };
+            const queries = JSON.parse(localStorage.getItem('queries')) || [];
+            queries.push(query);
+            localStorage.setItem('queries', JSON.stringify(queries));
+
+            alert("Your message has been sent!");
+            this.reset(); // Reset the form
+        });
+    </script>
+</body>
+</html>

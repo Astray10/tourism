@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Trip - Tourism Management</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Add styles for the container */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background: transparent;
+            backdrop-filter: blur(20px);
+        }
+
+        /* Styles for the booking and query sections */
+        h3 {
+            margin-top: 20px;
+        }
+
+        .booking {
+            border: 1px solid #eee;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            background: transparent;
+            backdrop-filter: blur(20px);
+        }
+
+        .query {
+            border: 1px solid #eee;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Book Your Trip</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="destinations.html">Destinations</a></li>
+                <li><a href="booking.html">Book a Trip</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="container">
+        <h2>Booking Form</h2>
+        <form id="booking-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="destination">Destination:</label>
+            <select id="destination" name="destination" required>
+                <!-- Options will be dynamically loaded -->
+            </select>
+
+            <div id="package-info" style="display:none;">
+                <p><strong>Package:</strong> <span id="packageDetails"></span></p>
+                <p><strong>Price:</strong> $<span id="price"></span></p>
+                <p><strong>Duration:</strong> <span id="duration"></span> days</p>
+                <p id="discount"></p>
+                <p><strong>Cancellation Policy:</strong> <span id="cancellation-policy"></span></p>
+            </div>
+
+            <label for="date">Travel Date:</label>
+            <input type="date" id="date" name="date" required>
+
+            <div id="summary" style="display:none;">
+                <h3>Booking Summary</h3>
+                <p id="summary-details"></p>
+            </div>
+
+            <input type="submit" value="Confirm Booking">
+        </form>
+
+        <!-- Booking Details Section -->
+        <section>
+            <h3>Your Bookings</h3>
+            <div id="booking-list">
+                <!-- Bookings will appear here -->
+            </div>
+        </section>
+
+        <!-- Query Section -->
+        <section>
+            <h3>Have Questions? Leave a Query!</h3>
+            <form id="query-form">
+                <label for="query">Your Query:</label>
+                <textarea id="query" name="query" required></textarea>
+                <input type="submit" value="Submit Query">
+            </form>
+            <div id="query-list">
+                <!-- Queries will appear here -->
+            </div>
+        </section>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Tourism Management. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Load destinations for the booking form dropdown
+        function loadDestinationsForBooking() {
+            const destinationSelect = document.getElementById('destination');
+            const destinations = JSON.parse(localStorage.getItem('destinations')) || [];
+
+            // Clear existing options
+            destinationSelect.innerHTML = '';
+
+            // Add options to the dropdown
+            destinations.forEach(dest => {
+                const option = document.createElement('option');
+                option.value = dest.name;
+                option.textContent = dest.name;
+                destinationSelect.appendChild(option);
+            });
+
+            // Load package details when a destination is selected
+            destinationSelect.addEventListener('change', function () {
+                const selectedDest = destinations.find(d => d.name === this.value);
+                if (selectedDest) {
+                    document.getElementById('packageDetails').textContent = selectedDest.package;
+                    document.getElementById('price').textContent = selectedDest.amount;
+                    document.getElementById('duration').textContent = selectedDest.duration;
+                    document.getElementById('package-info').style.display = 'block';
+
+                    // Discount system
+                    const discount = selectedDest.amount > 1000 ? "10% discount on packages over $1000!" : "No discount";
+                    document.getElementById('discount').textContent = discount;
+
+                    // Cancellation policy
+                    const policy = selectedDest.package.includes("Premium") ? "Free cancellation within 7 days" : "No cancellation after booking";
+                    document.getElementById('cancellation-policy').textContent = policy;
+                }
+            });
+        }
+
+        // Check if selected date is in the future
+        function isFutureDate(date) {
+            const selectedDate = new Date(date);
+            const today = new Date();
+            return selectedDate > today;
+        }
+
+        // Show booking summary before submission
+        function showSummary() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const destination = document.getElementById('destination').value;
+            const date = document.getElementById('date').value;
+
+            document.getElementById('summary-details').textContent = `
+                        Name: ${name}
+                        Email: ${email}
+                        Destination: ${destination}
+                        Date: ${date}
+                    `;
+            document.getElementById('summary').style.display = 'block';
+        }
+
+        // Load bookings and display them
+        function loadBookings() {
+            const bookingList = document.getElementById('booking-list');
+            bookingList.innerHTML = ''; // Clear previous bookings
+        }
+
+        // Handle booking form submission
+        document.getElementById('booking-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const travelDate = document.getElementById('date').value;
+            if (!isFutureDate(travelDate)) {
+                alert("Please select a future date for travel.");
+                return;
+            }
+
+            // Show the summary
+            showSummary();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const destination = document.getElementById('destination').value;
+
+            // Save booking to localStorage
+            const newBooking = { name, email, destination, date: travelDate };
+            const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+            bookings.push(newBooking);
+            localStorage.setItem('bookings', JSON.stringify(bookings));
+
+            // Clear the form after booking
+            this.reset();
+            alert("Booking confirmed! Check your summary.");
+
+            // Load bookings here if you want to display them temporarily
+            // loadBookings();
+        });
+
+        // Load queries and display them
+        function loadQueries() {
+            const queryList = document.getElementById('query-list');
+            const queries = JSON.parse(localStorage.getItem('queries')) || [];
+            queryList.innerHTML = ''; // Clear previous queries
+
+            queries.forEach(query => {
+                const queryDiv = document.createElement('div');
+                queryDiv.className = 'query';
+
+                queryDiv.innerHTML = `
+                            <p>${query}</p>
+                        `;
+                queryList.appendChild(queryDiv);
+            });
+        }
+
+        // Handle query form submission
+        document.getElementById('query-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const queryText = document.getElementById('query').value;
+            const queries = JSON.parse(localStorage.getItem('queries')) || [];
+            queries.push(queryText);
+            localStorage.setItem('queries', JSON.stringify(queries));
+
+            alert("Query submitted!");
+            this.reset();
+            loadQueries(); // Reload queries
+        });
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function () {
+            loadDestinationsForBooking();
+            // loadBookings(); // Remove this line to prevent bookings from displaying on page load
+        });
+    </script>
+</body>
+</html>
